@@ -13,6 +13,10 @@
 				<div class="card" style="width: 20rem;">
 				  	<img class="card-img-top" src="../images/wands/wand.jpg" width='5%'>
 				  	<div class="card-body">
+				  		<div class="text-right">
+				  			<a href="/admin/update_wand/<%= wand.id%>"><img src="../images/icons/edit1.png"></a>
+				  			<a href="/admin/delete_wand/<%= wand.id%>"><img src="../images/icons/delete1.png"></a>
+				  		</div>
 				    	<p class="card-text">Wood: <%= wand.wood %></p>
 				    	<p class="card-text">Flexibility: <%= wand.flexibility %></p>
 				    	<p class="card-text">Length: <%= wand.length %></p>

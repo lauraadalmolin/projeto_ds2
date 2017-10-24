@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="card">
-  		<div class="card-header">
+  		<div class="card-header bg-dark text-white">
 		    <h4>Wand Information</h4>
 		</div>
 		<div class="card-body">
@@ -16,14 +16,19 @@
 					<%= @e %>
 				</div>
 			<% end %>
+			<% if @w != nil %>
+				<div class='alert alert-warning' role='alert'>
+					<%= @w %>
+				</div>
+			<% end %>
 		    	<form method='post' action='/admin/create_wand'>
 					<div class="col-lg-12">
-						<input type="text" class="form-control" placeholder="Wood" name='wood' aria-describedby="basic-addon3">
-						<input class="form-control" placeholder="Flexibility" type='text' name='flexibility' aria-describedby="basic-addon3">
-						<input class="form-control" placeholder="Length" type='text' name='length' aria-describedby="basic-addon3">
-						<input class="form-control" placeholder="Core" type='text' name='core' aria-describedby="basic-addon3">
+						<input type="text" class="form-control" placeholder="Madeira" name='wood' aria-describedby="basic-addon3">
+						<input class="form-control" placeholder="Flexibilidade" type='text' name='flexibility' aria-describedby="basic-addon3">
+						<input class="form-control" placeholder="Comprimento (cm)" type='text' name='length' aria-describedby="basic-addon3">
+						<input class="form-control" placeholder="Núcleo" type='text' name='core' aria-describedby="basic-addon3">
 						<br>
-						<button type='submit' class="btn btn-default">Send</button>									  
+						<button type='submit' class="btn btn-hg">Enviar</button>									  
 					</div>	
 				</form>
 		  	</div>

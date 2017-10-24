@@ -73,7 +73,7 @@ end
 
 DataMapper.finalize
 #DataMapper.auto_migrate!
-#DataMapper.auto_upgrade!
+# => DataMapper.auto_upgrade!
 
 #INSERT INTO houses VALUES (DEFAULT, 'Gryffindor', 'Minerva McGonagall');
 #INSERT INTO houses VALUES (DEFAULT, 'Slytherin', 'Horace Slughorn');

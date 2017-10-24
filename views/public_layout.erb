@@ -3,7 +3,7 @@
 <head>
 	<title>Hogwarts</title>
 	<meta charset='utf-8'>
-
+    <link rel="shortcut icon" href="../images/icons/hogwarts_icon.png"/>
 	<link rel="stylesheet" href="./../bootstrap-4.0.0-beta.2-dist/css/bootstrap.min.css"/>
 	
 </head>
@@ -12,16 +12,13 @@
 		<a class="navbar-brand" href="#">Hogwarts</a>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-		        	<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-		      	</li>
 		      	<% if (session[:logged] == true) %>
 		      	<li class="nav-item">
 		        	<a class="nav-link" href="/logout">Logout</a>
 		      	</li>
 		      	<% end %>
 		      	<li class="nav-item">
-		        	<a class="nav-link" href="/login_screen">Login</a>
+		        	<a class="nav-link" href="/login_screen">Home</a>
 		      	</li>
 		    </ul>
 		</div>		

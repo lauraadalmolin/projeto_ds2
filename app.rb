@@ -17,7 +17,17 @@ get '/login_screen' do
 end
 
 get '/' do
-	erb :index, :layout => :public_layout
+	if (session[:admin] == true)
+		redirect '/admin'
+	end
+	if (session[:logado] == true)
+		redirect '/user'
+	end
+	erb :login_screen, :layout => :public_layout
+end
+
+get '/user' do
+	erb :home_user, :layout => :user_layout
 end
 
 get '/logout' do
@@ -29,26 +39,24 @@ post '/login' do
 	login = params['login']
 	password = Digest::MD5.hexdigest(params['password'])
 	wizard = Wizard.first(:login => login, :password => password)
-	puts wizard
-	puts '----------------------------------------------'
 	if (wizard != nil)
 		session[:logado] = true
 		session[:admin] = false
-		redirect '/user/'
+		redirect '/user'
 	else 
 		admin = Admin.first(:login => login, :password => password)
 		if (admin != nil)
 			session[:logado] = true
 			session[:admin] = true
-			redirect '/admin/'
+			redirect '/admin'
 		else
-			@m = "Login Error</div>"
+			@m = "Senha ou login errado"
 			erb :login_screen,:layout => :public_layout
 		end
 	end
 end
 
-get '/admin/' do
+get '/admin' do
 	erb :home_admin, :layout => :admin_layout	
 end
 
@@ -61,30 +69,30 @@ post '/admin/create_wand' do
 	wand.wood = params["wood"]
 	wand.flexibility = params["flexibility"]
 	wand.core = params["core"]
-	length = params["length"].gsub!(',','.')
-
-	if (/[0-9]*.[0-9]*/.match(length) != nil)
-		wand.length = length
+	len = params["length"]
+	if len.include?(",")
+		len = len.gsub!(',','.')
+	end
+	if (len.include?('.'))
+		if(/[0-9]+.[0-9]+/.match(len) != nil)
+			wand.length = len.to_f
+		end
 	else 
-		if (/[0-9]*/.match(length) != nil)
-			wand.length = length
+		if (/[0-9]+/.match(len) != nil)
+			wand.length = len.to_f
 		else
-			puts "-------------------------\n"
-			puts "fosdfjksdoifjsdiofjsdiofidjso\n"
-			puts "-------------------------\n"
-			puts "-------------------------\n"
+			@w = "Você informou um valor inválido para o comprimento da varinha.";	
 		end
 	end
-
 	if (wand.wood != '' && wand.flexibility != '' && wand.core != '')
 		if (wand.save)
-			@s = "Wand successfuly added!"
+			@s = "Varinha adicionada com sucesso!"
 		else
-			@e = "An error occurred while trying to add the wand."
+			@e = "Um erro ocorreu ao tentar salvar a varinha."
 		end
 		erb :create_wand, :layout => :admin_layout
 	else 
-		@e = "Please fill all the fields in the form (the field named length must be a number)."
+		@e = "Por favor, preencha todos os campos no formulário. Observe que o valor informado no campo comprimento deve ser um número."
 		erb :create_wand, :layout => :admin_layout
 	end	
 end
@@ -92,5 +100,41 @@ end
 get '/admin/retrieve_wands' do
 	@wandArr = Wand.all
 	erb :retrieve_wands, :layout => :admin_layout
+end
 
+get '/admin/delete_wand/:id' do
+	wand = Wand.get(params["id"].to_i)
+	wand.destroy
+	redirect '/admin/retrieve_wands'
+end
+
+get '/admin/update_wand/:id' do
+	@wand = Wand.get(params["id"].to_i)
+	erb :update_wand_screen, :layout => :admin_layout
+end
+
+post '/admin/update_wand/:id' do
+	@wand = Wand.get(params["id"])
+	if (params["flexibility"] != '' && params["wood"] != '' && params["core"] != '')
+		len = params["length"]
+		if len.include? ","
+			len = len.gsub!(',','.')
+		end
+		if (len.include? '.')
+			if(/[0-9]+.[0-9]+/.match(len) != nil)
+				@wand.update(:flexibility => params["flexibility"], :wood => params["wood"], :length => len.to_f, :core => params["core"])
+				redirect '/admin/retrieve_wands'
+			end
+		else 
+			if (/[0-9]+/.match(len) != nil)
+				@wand.update(:flexibility => params["flexibility"], :wood => params["wood"], :length => len.to_f, :core => params["core"])
+				redirect '/admin/retrieve_wands'
+			else
+				@w = "Você informou um valor inválido para o comprimento da varinha.";	
+				erb :update_wand_screen, :layout => :admin_layout
+			end
+		end
+	end
+	@w = "Você deve preencher todos os campos."
+	erb :update_wand_screen, :layout => :admin_layout
 end
