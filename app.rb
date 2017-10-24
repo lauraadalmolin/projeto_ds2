@@ -138,3 +138,53 @@ post '/admin/update_wand/:id' do
 	@w = "Você deve preencher todos os campos."
 	erb :update_wand_screen, :layout => :admin_layout
 end
+
+get '/admin/create_animal' do
+	erb :create_animal, :layout => :admin_layout
+end
+
+post '/admin/create_animal' do
+	animal = Animal.new
+	if (params["species"] != "" && params["name"] != "")
+		animal.species = params["species"]
+		animal.name = params["name"]
+		if (animal.save)
+			@s = "Animal cadastrado com sucesso!"
+		else
+			@e = "Ocorreu um erro ao tentar salvar o animal."
+		end
+	else 
+		@w = "Você deve preencher todos os campos do formulário."
+	end
+	erb :create_animal, :layout => :admin_layout
+end
+
+get '/admin/retrieve_animals' do
+	@animalArr = Animal.all
+	erb :retrieve_animals, :layout => :admin_layout
+end
+
+get '/admin/delete_animal/:id' do
+	animal = Animal.get(params["id"].to_i)
+	animal.destroy
+	redirect '/admin/retrieve_animals'
+end
+
+get '/admin/update_animal/:id' do
+	@animal = Animal.get(params["id"].to_i)
+	erb :update_animal_screen, :layout => :admin_layout 
+end
+
+post '/admin/update_animal/:id' do
+	@animal = Animal.get(params["id"].to_i)
+	if (params["species"] != "" && params["name"] != "")
+		if (@animal.update(:species => params["species"], :name => params["name"]))
+			@s = "Animal editado com sucesso!"
+		else
+			@e = "Ocorreu um erro ao tentar editar o animal."
+		end
+	else 
+		@w = "Você deve preencher todos os campos do formulário."
+	end
+	erb :update_animal_screen, :layout => :admin_layout
+end
