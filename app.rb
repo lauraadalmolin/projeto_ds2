@@ -188,3 +188,53 @@ post '/admin/update_animal/:id' do
 	end
 	erb :update_animal_screen, :layout => :admin_layout
 end
+
+get '/admin/create_question' do
+	erb :create_question, :layout => :admin_layout
+end
+
+post '/admin/create_question' do
+	question = Question.new
+	if (params["description"] != "") 
+		question.description = params["description"]
+		if (question.save)
+			@s = "Pergunta salva com sucesso!"
+		else 
+			@e = "Ocorreu um erro ao salvar sua pergunta."
+		end
+	else
+		@w = "Você deve preencher todos os campos."
+	end
+	erb :create_question, :layout => :admin_layout
+end
+
+get '/admin/create_answer' do
+	@questionArr = Question.all
+	erb :create_answer, :layout => :admin_layout
+end
+
+post '/admin/create_answer' do
+	answer = Answer.new
+	question = Question.get(params["question_id"].to_i)
+	if (params["description"] != "" && params["question_id"] != nil)
+		if (/^[1-4]$/.match(params["gryffindorValue"]) != nil && /^[1-4]$/.match(params["slytherinValue"]) != nil && /^[1-4]$/.match(params["ravenclawValue"]) != nil && /^[1-4]$/.match(params["hufflepuffValue"]) != nil)
+			answer.question = question
+			answer.description = params["description"]
+			answer.gryffindorValue = params["gryffindorValue"]
+			answer.slytherinValue = params["slytherinValue"]
+			answer.ravenclawValue = params["ravenclawValue"]
+			answer.hufflepuffValue = params["hufflepuffValue"]
+			if (answer.save) 
+				@s = "Resposta salva com sucesso!"
+			else 
+				@e = "Ocorreu um erro ao tentar salvar a resposta."
+			end
+		else 
+			@w = "Os campos relativos a pontos devem ser preenchidos com apenas um dos números inteiros: 1, 2, 3 ou 4."
+		end
+	else
+		@w = "Você deve preencher todos os campos."
+	end
+	@questionArr = Question.all
+	erb :create_answer, :layout => :admin_layout
+end

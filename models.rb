@@ -48,15 +48,14 @@ end
 class Question
 	include DataMapper::Resource
 	property :id, Serial
-	property :description, String, :required => true
+	property :description, Text, :required => true
 	has n, :answers, :constraint => :destroy
 end
 
 class Answer 
 	include DataMapper::Resource
 	property :id, Serial
-	property :colour, String, :required => true
-	property :description, String, :required => true
+	property :description, Text, :required => true
 	property :gryffindorValue, Integer, :required => true
 	property :slytherinValue, Integer, :required => true
 	property :ravenclawValue, Integer, :required => true
@@ -73,7 +72,7 @@ end
 
 DataMapper.finalize
 #DataMapper.auto_migrate!
-# => DataMapper.auto_upgrade!
+#DataMapper.auto_upgrade!
 
 #INSERT INTO houses VALUES (DEFAULT, 'Gryffindor', 'Minerva McGonagall');
 #INSERT INTO houses VALUES (DEFAULT, 'Slytherin', 'Horace Slughorn');
