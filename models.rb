@@ -56,6 +56,7 @@ class Answer
 	include DataMapper::Resource
 	property :id, Serial
 	property :description, Text, :required => true
+	property :color, String, :required => true
 	property :gryffindorValue, Integer, :required => true
 	property :slytherinValue, Integer, :required => true
 	property :ravenclawValue, Integer, :required => true
@@ -78,7 +79,11 @@ DataMapper.finalize
 #INSERT INTO houses VALUES (DEFAULT, 'Slytherin', 'Horace Slughorn');
 #INSERT INTO houses VALUES (DEFAULT, 'Ravenclaw', 'Filius Flitwick');
 #INSERT INTO houses VALUES (DEFAULT, 'Hufflepuff', 'Pomona Sprout');
+#INSERT INTO houses VALUES (DEFAULT, 'Invisible', 'Invisible');
 
 #INSERT INTO admins (login, password) VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3');
+
+#INSERT INTO animals VALUES (DEFAULT, 'Invisible', 'Invisible');
+#INSERT INTO wands VALUES (DEFAULT, 'Invisible', 'Invisible', 20.0, 'Invisible'); 
 
 

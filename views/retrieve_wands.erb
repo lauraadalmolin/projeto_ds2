@@ -2,16 +2,17 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="card">
-  		<div class="card-header">
+  		<div class="card-header bg-dark text-white">
 		    <h4>Varinhas</h4>
 		</div>
 		<div class="card-body">
 			<div class='container-fluid'>
 				<div class='row'>
 		<% @wandArr.each do |wand| %>
+			<% if (wand.id != 1) %>
 			<div class='col-md-4'>
 				<div class="card" style="width: 20rem;">
-				  	<img class="card-img-top" src="../images/wands/wand.jpg" width='5%'>
+				  	<img class="card-img-top" src="../images/wands/<%=wand.id%>.jpg" width='5%'>
 				  	<div class="card-body">
 				  		<div class="text-right">
 				  			<a href="/admin/update_wand/<%= wand.id%>"><img src="../images/icons/edit1.png"></a>
@@ -24,6 +25,7 @@
 				  	</div>
 				</div> 
 			</div> 
+			<% end %>
 		<% end %>
 				</div>
 			</div>

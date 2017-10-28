@@ -2,26 +2,28 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="card">
-  		<div class="card-header">
+  		<div class="card-header bg-dark text-white">
 		    <h4>Animais</h4>
 		</div>
 		<div class="card-body">
 			<div class='container-fluid'>
 				<div class='row'>
 		<% @animalArr.each do |animal| %>
-			<div class='col-md-4'>
-				<div class="card" style="width: 20rem;">
-				  	<img class="card-img-top" src="../images/animals/animal.jpg" width='5%'>
-				  	<div class="card-body">
-				  		<div class="text-right">
-				  			<a href="/admin/update_animal/<%= animal.id%>"><img src="../images/icons/edit1.png"></a>
-				  			<a href="/admin/delete_animal/<%= animal.id%>"><img src="../images/icons/delete1.png"></a>
-				  		</div>
-				    	<p class="card-text">Espécie: <%= animal.species %></p>
-				    	<p class="card-text">Nome: <%= animal.name %></p>
-				  	</div>
+			<% if animal.id != 1 %> 
+				<div class='col-md-4'>
+					<div class="card" style="width: 20rem;">
+					  	<img class="card-img-top" src="../images/animals/<%=animal.id%>.jpg" width='5%'>
+					  	<div class="card-body">
+					  		<div class="text-right">
+					  			<a href="/admin/update_animal/<%= animal.id%>"><img src="../images/icons/edit1.png"></a>
+					  			<a href="/admin/delete_animal/<%= animal.id%>"><img src="../images/icons/delete1.png"></a>
+					  		</div>
+					    	<p class="card-text">Espécie: <%= animal.species %></p>
+					    	<p class="card-text">Nome: <%= animal.name %></p>
+					  	</div>
+					</div> 
 				</div> 
-			</div> 
+			<% end %>
 		<% end %>
 				</div>
 			</div>

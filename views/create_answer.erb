@@ -21,23 +21,49 @@
 					<%= @w %>
 				</div>
 			<% end %>
-		    	<form method='post' action='/admin/create_answer'>
-					<div class="col-lg-12">
-						<select class="custom-select" name='question_id'>
-							<option selected="">Selecione uma pergunta</option>
-							<% @questionArr.each do |question| %>
-								<option value="<%= question.id%>"><%=question.description%></option>
+				<% if (@m != nil) %>
+					<div class='alert alert-danger' role='alert'>
+						<%= @m %>
+					</div>
+				<% else %>
+			    	<form method='post' action='/admin/create_answer'>
+						<div class="col-lg-12">
+							Selecione uma pergunta:
+							<br>
+							<select class="custom-select" name='question_id'>
+								<% @questionArr.each do |question| %>
+									<option value="<%= question.id%>"><%=question.description%></option>
+								<% end %>
+							</select>
+							<br>
+							<br>
+							Selecione uma cor:
+							<br>	
+							<br>	
+							<% arr=['#468189 blue_a', '#ffcdb2 pale_pink_a', '#1e3231 weird_black_a', '#eb8258 salmon_a', '#6b2737 purpleish_a', '#2e294e eggplant_a', '#7fb685 light_green_a', '#dbad6a sand_a', '#e13700 coral_a', '#9e7b9b lavender_a', '#b2ebf2 light_blue_a'] %>
+							<% arr.each do |color_info| %>
+								<% boom = color_info.split %>
+								<div class='row'>
+									<div class='col-md-1 text-right'>
+										<input type='radio' name='color' value='<%=boom[1]%>'> 
+									</div>
+									<div style="background-color: <%=boom[0]%> !important;" class='col-md-1'>
+										<p style="color: <%=boom[0]%> !important;"></p>
+									</div>
+								</div>
 							<% end %>
-						</select>
-						<input type="text" class="form-control" placeholder="Resposta" name='description' aria-describedby="basic-addon3">
-						<input type="number" class="form-control" placeholder="Pontos para Grifinória" name='gryffindorValue' aria-describedby="basic-addon3">
-						<input type="number" class="form-control" placeholder="Pontos para Sonserina" name='slytherinValue' aria-describedby="basic-addon3">
-						<input type="number" class="form-control" placeholder="Pontos para Corvinal" name='ravenclawValue' aria-describedby="basic-addon3">
-						<input type="number" class="form-control" placeholder="Pontos para Lufa-lufa" name='hufflepuffValue' aria-describedby="basic-addon3">
-						<br>
-						<button type='submit' class="btn btn-hg">Adicionar</button>									  
-					</div>	
-				</form>
+							<br>
+							<input type="text" class="form-control" placeholder="Resposta" name='description' aria-describedby="basic-addon3">
+							<input type="number" class="form-control" placeholder="Pontos para Grifinória" name='gryffindorValue' aria-describedby="basic-addon3">
+							<input type="number" class="form-control" placeholder="Pontos para Sonserina" name='slytherinValue' aria-describedby="basic-addon3">
+							<input type="number" class="form-control" placeholder="Pontos para Corvinal" name='ravenclawValue' aria-describedby="basic-addon3">
+							<input type="number" class="form-control" placeholder="Pontos para Lufa-lufa" name='hufflepuffValue' aria-describedby="basic-addon3">
+							<br>
+							<button type='submit' class="btn btn-hg">Adicionar</button>									  
+						</div>	
+					</form>
+				
+				<% end %>
 		  	</div>
 		</div>
 	</div>

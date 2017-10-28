@@ -1,0 +1,57 @@
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+	  		<div class="card-header  bg-dark text-white">
+			    <h4>Usuários</h4>
+			</div>
+			<div class="card-body">
+				<div class='container-fluid'>
+					<div class='row'>
+						<div class='col-md-12'>
+							<% if @p != nil %>
+								<div class='text-center alert alert-danger' role='alert'>
+									<%= @p %>
+								</div>
+							<% end %>
+							<% if @m != nil %>
+								<div class='alert alert-danger' role='alert'>
+									<%= @m %>
+								</div>
+							<% end %>
+						</div>
+						<% @wizardArr.each do |wizard| %>
+							<div class='col-md-12'>
+								<div class="card">
+								  	<div class="card-header bg-dark text-white">
+								  		<h5>
+								  			<div class="row">
+								  				<div class="col-md-1">
+									  				<div class="text-center">
+											  			<a href="/admin/update_wizard/<%= wizard.id%>"><img  src="../../images/icons/edit1_white.png"></a>
+											  			<a href="/admin/delete_wizard/<%= wizard.id%>"><img  src="../../images/icons/delete1_white.png"></a>
+											  		</div>
+								  				</div>
+									  			<div class="col-md-8 text-left">
+									  				<%= wizard.name %>
+								  				</div>
+								  			</div>
+								  		</h5>
+								  	</div>
+								  	<div class="card-body">
+								  		<p><b>Login:</b> <%= wizard.login%></p>
+								  		<% arr = wizard.dateOfBirth.to_s.split('-')
+										   dateOfBirth = arr[2] + "/" + arr[1] + "/" + arr[0]
+										%>
+							  			<p><b>Data de Nascimento:</b> <%= dateOfBirth %></p>
+								  	</div>
+								</div> 
+								<hr>
+							</div> 
+			  			<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,73 @@
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+  		<div class="card-header  bg-dark text-white">
+		    <h4>Perguntas</h4>
+		</div>
+		<div class="card-body">
+			<div class='container-fluid'>
+				<div class='row'>
+				<div class='col-md-12'>
+					<% if @p != nil %>
+						<div class='text-center alert alert-danger' role='alert'>
+							<%= @p %>
+						</div>
+					<% end %>
+					<% if @m != nil %>
+						<div class='alert alert-danger' role='alert'>
+							<%= @m %>
+						</div>
+					<% end %>
+				</div>
+		<% @questionArr.each do |question| %>
+			<div class='col-md-12'>
+				
+				<div class="card">
+
+				  	<div class="card-header bg-dark text-white">
+				  		<h5>
+				  			<div class="row">
+				  				<div class="col-md-1">
+					  				<div class="text-center">
+							  			<a href="/admin/update_question/<%= question.id%>"><img  src="../../images/icons/edit1_white.png"></a>
+							  			<a href="/admin/delete_question/<%= question.id%>"><img  src="../../images/icons/delete1_white.png"></a>
+							  		</div>
+				  				</div>
+					  			<div class="col-md-8 text-left">
+					  				<%= question.description %>
+				  				</div>
+				  			</div>
+				  		</h5>
+				  	</div>
+				  	<div class="card-body">
+				  		<% question.answers.each do |answer| %>
+				  		<div class="row <%=answer.color%>">
+			  				<div class="col-md-1" style="background-color: white;">
+				  				<div class="text-center">
+						  			<a href="/admin/update_answer/<%= answer.id%>"><img  src="../../images/icons/edit1.png"></a>
+						  			<a href="/admin/delete_answer/<%= answer.id%>"><img  src="../../images/icons/delete1.png"></a>
+						  		</div>
+			  				</div>
+				  			<div class="col-md-8 text-left">
+				  				<h5><%= answer.description %></h5>
+			  				</div>
+			  			</div>
+			  			<hr>
+			  			<p><b>Pontos para a Grifinória:</b> <%= answer.gryffindorValue %></p>
+			  			<p><b>Pontos para a Sonserina:</b> <%= answer.slytherinValue %></p>
+			  			<p><b>Pontos para a Corvinal:</b> <%= answer.ravenclawValue %></p>
+			  			<p><b>Pontos para a Lufa-Lufa:</b> <%= answer.hufflepuffValue %></p>
+			  			<br>
+			  			<% end %>
+				  	</div>
+				</div> 
+				<hr>
+			</div> 
+		<% end %>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>

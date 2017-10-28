@@ -50,3 +50,71 @@ fieldset[disabled] .btn-hg.active {
   color: #06000D; 
   background-color: #ffffff; 
 }
+
+.blue_a {
+	background-color: #468189;
+	color: white; 
+}
+
+.pale_pink_a {
+	background-color: #ffcdb2;
+	color: white; 
+}
+
+.weird_black_a {
+	background-color: #1e3231;
+	color: white; 
+}
+
+.salmon_a {
+	background-color: #eb8258;
+	color: white; 
+}
+
+.purpleish_a {
+	background-color: #6b2737;
+	color: white; 	
+}
+
+.eggplant_a {
+	background-color: #2e294e;
+	color: white; 
+}
+
+.light_green_a {
+	background-color: #7fb685;
+	color: white; 
+}
+
+.sand_a {
+	background-color: #dbad6a;
+	color: white; 
+}
+
+.coral_a {
+	background-color: #e13700; 
+	color: white; 
+}
+
+.lavender_a {
+	background-color: #9e7b9b;
+	color: white; 
+}
+
+.light_blue_a {
+	background-color: #b2ebf2;
+	color: white; 
+}
+
+body {
+	font-family: 'Delius', cursive;
+}
+
+.link-register {
+	color: #1e3231;
+}
+
+.link-register:hover {
+	color: gray;
+	text-decoration: none;
+}

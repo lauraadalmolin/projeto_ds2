@@ -10,12 +10,14 @@
 					<%= @w %>
 				</div>
 			<% end %>
-		    	<form method='post' action='/admin/update_wand/<%= @wand.id %>'>
+		    	<form method='post' action='/admin/update_wand/<%= @wand.id %>' enctype='multipart/form-data'>
 					<div class="col-lg-12">
 						<input value="<%= @wand.wood %>" type="text" class="form-control" placeholder="Madeira" name='wood' aria-describedby="basic-addon3">
 						<input value="<%= @wand.flexibility %>"  class="form-control" placeholder="Flexibilidade" type='text' name='flexibility' aria-describedby="basic-addon3">
 						<input value="<%= @wand.length %>"  class="form-control" placeholder="Comprimento (cm)" type='text' name='length' aria-describedby="basic-addon3">
 						<input value="<%= @wand.core %>"  class="form-control" placeholder="Núcleo" type='text' name='core' aria-describedby="basic-addon3">
+						Imagem da Varinha:
+					  	<input type='file' name='file'>
 						<br>
 						<button type='submit' class="btn btn-hg">Enviar</button>									  
 					</div>	
