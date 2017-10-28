@@ -136,8 +136,9 @@ post '/admin/update_wizard/:id' do
 		arr = @wizard.dateOfBirth.to_s.split('-')
 		@dateOfBirth = arr[2] + "/" + arr[1] + "/" + arr[0]
 		erb :update_wizard_screen, :layout => :admin_layout
+	else
+		redirect '/admin/retrieve_wizards'
 	end
-	redirect '/admin/retrieve_wizards'
 end
 
 get '/admin/features' do
@@ -233,16 +234,18 @@ get '/admin/delete_wand/:id' do
 		File.delete("./public/images/wands/" + wand.id.to_s + ".jpg")
 		wand.destroy
 		redirect '/admin/retrieve_wands'
-	end 
-	redirect '/'
+	else
+		redirect '/'
+	end
 end
 
 get '/admin/update_wand/:id' do
 	@wand = Wand.get(params["id"].to_i)
 	if (@wand != nil && @wand.id != 1)
 		erb :update_wand_screen, :layout => :admin_layout
+	else
+		redirect '/'
 	end
-	redirect '/'
 end
 
 post '/admin/update_wand/:id' do
@@ -256,6 +259,7 @@ post '/admin/update_wand/:id' do
 			if(/[0-9]+.[0-9]+/.match(len) != nil)
 				@wand.update(:flexibility => params["flexibility"], :wood => params["wood"], :length => len.to_f, :core => params["core"])
 				if (params["file"] != nil)
+					File.delete("./public/images/wands/" + @wand.id.to_s + ".jpg")
 					file = params['file'][:tempfile]
 					accepted_formats = [".jpg"]
 					if accepted_formats.include? File.extname(file)
@@ -271,6 +275,7 @@ post '/admin/update_wand/:id' do
 			if (/[0-9]+/.match(len) != nil)
 				@wand.update(:flexibility => params["flexibility"], :wood => params["wood"], :length => len.to_f, :core => params["core"])
 				if (params["file"] != nil)
+					File.delete("./public/images/wands/" + @wand.id.to_s + ".jpg")
 					file = params['file'][:tempfile]
 					accepted_formats = [".jpg"]
 					if accepted_formats.include? File.extname(file)
@@ -328,16 +333,18 @@ get '/admin/delete_animal/:id' do
 		File.delete("./public/images/animals/" + animal.id.to_s + ".jpg")
 		animal.destroy
 		redirect '/admin/retrieve_animals'
-	end 
-	redirect '/'
+	else
+		redirect '/'
+	end
 end
 
 get '/admin/update_animal/:id' do
 	@animal = Animal.get(params["id"].to_i)
 	if (@animal != nil && @animal.id != 1)
 		erb :update_animal_screen, :layout => :admin_layout 
-	end 
-	redirect '/'
+	else
+		redirect '/'
+	end
 end
 
 post '/admin/update_animal/:id' do
@@ -346,6 +353,7 @@ post '/admin/update_animal/:id' do
 		if (@animal.update(:species => params["species"], :name => params["name"]))
 			@s = "Animal editado com sucesso!"
 			if (params['file'] != nil)
+				File.delete("./public/images/animals/" + @animal.id.to_s + ".jpg")
 				file = params['file'][:tempfile]
 				accepted_formats = [".jpg"]
 				if accepted_formats.include? File.extname(file)
@@ -402,8 +410,9 @@ get '/admin/update_question/:id' do
 	@question = Question.get(params["id"].to_i)
 	if (@question != nil)
 		erb :update_question_screen, :layout => :admin_layout
+	else
+		redirect "/"
 	end
-	redirect "/"
 end
 
 post '/admin/update_question/:id' do
@@ -468,11 +477,13 @@ end
 
 get '/admin/update_answer/:id' do
 	@questionArr = Question.all
-	@answer = Answer.get(params["id"].to_i)
-	if (@answer != nil)
+	answer = Answer.get(params["id"].to_i)
+	if (answer.id != nil)
+		@answer = Answer.get(params["id"].to_i)
 		erb :update_answer_screen, :layout => :admin_layout	
+	else
+		redirect "/" 
 	end
-	redirect "/"
 end
 
 post '/admin/update_answer/:id' do
