@@ -204,18 +204,20 @@ post '/admin/create_wand' do
 		end
 	end
 	if (wand.wood != '' && wand.flexibility != '' && wand.core != '')
-		if (wand.save)
-			@s = "Varinha adicionada com sucesso!"
-			file = params['file'][:tempfile]
+		file = params['file'][:tempfile]
 			accepted_formats = [".jpg"]
 			if accepted_formats.include? File.extname(file)
-				File.open('./public/images/wands/' + wand.id.to_s + File.extname(file), "w") do |f|
+				if (wand.save)
+					@s = "Varinha adicionada com sucesso!"
+					File.open('./public/images/wands/' + wand.id.to_s + File.extname(file), "w") do |f|
 					f.write(params['file'][:tempfile].read)
+					end
+				else
+					@e = "Um erro ocorreu ao tentar salvar a varinha."
 				end
+			else
+			@e = "O formato da imagem deve ser .jpg."
 			end
-		else
-			@e = "Um erro ocorreu ao tentar salvar a varinha."
-		end
 		erb :create_wand, :layout => :admin_layout
 	else 
 		@e = "Por favor, preencha todos os campos no formulário. Observe que o valor informado no campo comprimento deve ser um número."
@@ -259,6 +261,8 @@ post '/admin/update_wand/:id' do
 			if(/[0-9]+.[0-9]+/.match(len) != nil)
 				@wand.update(:flexibility => params["flexibility"], :wood => params["wood"], :length => len.to_f, :core => params["core"])
 				if (params["file"] != nil)
+					puts "-----------------------------------"
+					puts "-----------------------------------"
 					File.delete("./public/images/wands/" + @wand.id.to_s + ".jpg")
 					file = params['file'][:tempfile]
 					accepted_formats = [".jpg"]
@@ -268,13 +272,16 @@ post '/admin/update_wand/:id' do
 						end
 					end
 				end
-				redirect '/admin/retrieve_wands'
+				@w = "Edição realizada com sucesso!";	
+				erb :update_wand_screen, :layout => :admin_layout
 
 			end
 		else 
 			if (/[0-9]+/.match(len) != nil)
 				@wand.update(:flexibility => params["flexibility"], :wood => params["wood"], :length => len.to_f, :core => params["core"])
 				if (params["file"] != nil)
+					puts "-----------------------------------"
+					puts "-----------------------------------"
 					File.delete("./public/images/wands/" + @wand.id.to_s + ".jpg")
 					file = params['file'][:tempfile]
 					accepted_formats = [".jpg"]
@@ -284,15 +291,17 @@ post '/admin/update_wand/:id' do
 						end
 					end
 				end
-				redirect '/admin/retrieve_wands'
+				@w = "Edição realizada com sucesso!";	
+				erb :update_wand_screen, :layout => :admin_layout
 			else
 				@w = "Você informou um valor inválido para o comprimento da varinha.";	
 				erb :update_wand_screen, :layout => :admin_layout
 			end
 		end
+	else 
+		@w = "Você deve preencher todos os campos."
+		erb :update_wand_screen, :layout => :admin_layout
 	end
-	@w = "Você deve preencher todos os campos."
-	erb :update_wand_screen, :layout => :admin_layout
 end
 
 get '/admin/create_animal' do
@@ -304,17 +313,23 @@ post '/admin/create_animal' do
 	if (params["species"] != "" && params["name"] != "")
 		animal.species = params["species"]
 		animal.name = params["name"]
-		if (animal.save)
-			@s = "Animal cadastrado com sucesso!"
+		if (params['file'] != nil)
 			file = params['file'][:tempfile]
 			accepted_formats = [".jpg"]
-			if accepted_formats.include? File.extname(file)
-				File.open('./public/images/animals/' + animal.id.to_s + File.extname(file), "w") do |f|
-					f.write(params['file'][:tempfile].read)
+			if accepted_formats.include? File.extname(file)	
+				if (animal.save)
+					@s = "Animal cadastrado com sucesso!"
+					File.open('./public/images/animals/' + animal.id.to_s + File.extname(file), "w") do |f|
+						f.write(params['file'][:tempfile].read)
+					end
+				else
+					@e = "Ocorreu um erro ao tentar salvar o animal."
 				end
+			else
+				@e = "O formato da imagem deve ser .jpg"
 			end
 		else
-			@e = "Ocorreu um erro ao tentar salvar o animal."
+			@e = "Você deve selecionar uma imagem"
 		end
 	else 
 		@w = "Você deve preencher todos os campos do formulário."
@@ -350,20 +365,17 @@ end
 post '/admin/update_animal/:id' do
 	@animal = Animal.get(params["id"].to_i)
 	if (params["species"] != "" && params["name"] != "")
-		if (@animal.update(:species => params["species"], :name => params["name"]))
-			@s = "Animal editado com sucesso!"
-			if (params['file'] != nil)
-				File.delete("./public/images/animals/" + @animal.id.to_s + ".jpg")
-				file = params['file'][:tempfile]
-				accepted_formats = [".jpg"]
-				if accepted_formats.include? File.extname(file)
-					File.open('./public/images/animals/' + @animal.id.to_s + File.extname(file), "w") do |f|
-						f.write(params['file'][:tempfile].read)
-					end
+		@animal.update(:species => params["species"], :name => params["name"])
+		@s = "Animal editado com sucesso!"
+		if (params['file'] != nil)
+			File.delete("./public/images/animals/" + @animal.id.to_s + ".jpg")
+			file = params['file'][:tempfile]
+			accepted_formats = [".jpg"]
+			if accepted_formats.include? File.extname(file)
+				File.open('./public/images/animals/' + @animal.id.to_s + File.extname(file), "w") do |f|
+					f.write(params['file'][:tempfile].read)
 				end
 			end
-		else
-			@e = "Ocorreu um erro ao tentar editar o animal."
 		end
 	else 
 		@w = "Você deve preencher todos os campos do formulário."
