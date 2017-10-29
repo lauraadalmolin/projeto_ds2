@@ -75,14 +75,16 @@ DataMapper.finalize
 #DataMapper.auto_migrate!
 #DataMapper.auto_upgrade!
 
+
+# --- É preciso rodar esses inserts antes de utilizar o sistema pela primeira vez...
+#
+#
 #INSERT INTO houses VALUES (DEFAULT, 'Gryffindor', 'Minerva McGonagall');
 #INSERT INTO houses VALUES (DEFAULT, 'Slytherin', 'Horace Slughorn');
 #INSERT INTO houses VALUES (DEFAULT, 'Ravenclaw', 'Filius Flitwick');
 #INSERT INTO houses VALUES (DEFAULT, 'Hufflepuff', 'Pomona Sprout');
 #INSERT INTO houses VALUES (DEFAULT, 'Invisible', 'Invisible');
-
 #INSERT INTO admins (login, password) VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3');
-
 #INSERT INTO animals VALUES (DEFAULT, 'Invisible', 'Invisible');
 #INSERT INTO wands VALUES (DEFAULT, 'Invisible', 'Invisible', 20.0, 'Invisible'); 
 
