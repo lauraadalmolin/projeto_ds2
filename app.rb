@@ -111,7 +111,7 @@ end
 post '/admin/update_wizard/:id' do
 	@wizard = Wizard.get(params["id"].to_i)
 	if (@wizard != nil)
-		if (params["name"] != nil && params["login"] != nil && params["dateOfBirth"] != nil)
+		if (params["name"] != "" && params["login"] != "" && params["dateOfBirth"] != "")
 			if(/^(?:(?:31(\/)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/.match(params["dateOfBirth"]) != nil)
 				arr = params["dateOfBirth"].split("/")
 				if (/[0-9]+/.match(arr[2]) != nil)
@@ -263,16 +263,18 @@ post '/admin/update_wand/:id' do
 				if (params["file"] != nil)
 					puts "-----------------------------------"
 					puts "-----------------------------------"
-					File.delete("./public/images/wands/" + @wand.id.to_s + ".jpg")
 					file = params['file'][:tempfile]
 					accepted_formats = [".jpg"]
 					if accepted_formats.include? File.extname(file)
+						File.delete("./public/images/wands/" + @wand.id.to_s + ".jpg")
 						File.open('./public/images/wands/' + @wand.id.to_s + File.extname(file), "w") do |f|
 							f.write(params['file'][:tempfile].read)
 						end
+					else
+						@w = "Sua imagem não foi editada porque ela não apresentava o formato pedido (.jpg)"
 					end
 				end
-				@w = "Edição realizada com sucesso!";	
+				@s = "Edição realizada com sucesso!";	
 				erb :update_wand_screen, :layout => :admin_layout
 
 			end
@@ -282,16 +284,18 @@ post '/admin/update_wand/:id' do
 				if (params["file"] != nil)
 					puts "-----------------------------------"
 					puts "-----------------------------------"
-					File.delete("./public/images/wands/" + @wand.id.to_s + ".jpg")
 					file = params['file'][:tempfile]
 					accepted_formats = [".jpg"]
 					if accepted_formats.include? File.extname(file)
+						File.delete("./public/images/wands/" + @wand.id.to_s + ".jpg")
 						File.open('./public/images/wands/' + @wand.id.to_s + File.extname(file), "w") do |f|
 							f.write(params['file'][:tempfile].read)
 						end
+					else
+						@w = "Sua imagem não foi editada porque ela não apresentava o formato pedido (.jpg)"
 					end
 				end
-				@w = "Edição realizada com sucesso!";	
+				@s = "Edição realizada com sucesso!";	
 				erb :update_wand_screen, :layout => :admin_layout
 			else
 				@w = "Você informou um valor inválido para o comprimento da varinha.";	
@@ -368,13 +372,15 @@ post '/admin/update_animal/:id' do
 		@animal.update(:species => params["species"], :name => params["name"])
 		@s = "Animal editado com sucesso!"
 		if (params['file'] != nil)
-			File.delete("./public/images/animals/" + @animal.id.to_s + ".jpg")
 			file = params['file'][:tempfile]
 			accepted_formats = [".jpg"]
 			if accepted_formats.include? File.extname(file)
+				File.delete("./public/images/animals/" + @animal.id.to_s + ".jpg")
 				File.open('./public/images/animals/' + @animal.id.to_s + File.extname(file), "w") do |f|
 					f.write(params['file'][:tempfile].read)
 				end
+			else
+				@w = "Sua imagem não foi editada porque ela não apresentava o formato pedido (.jpg)"
 			end
 		end
 	else 

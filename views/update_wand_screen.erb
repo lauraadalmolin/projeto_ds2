@@ -10,6 +10,11 @@
 					<%= @w %>
 				</div>
 			<% end %>
+			<% if @s != nil %>
+				<div class='alert alert-success' role='alert'>
+					<%= @s %>
+				</div>
+			<% end %>
 		    	<form method='post' action='/admin/update_wand/<%= @wand.id %>' enctype='multipart/form-data'>
 					<div class="col-lg-12">
 						<input value="<%= @wand.wood %>" type="text" class="form-control" placeholder="Madeira" name='wood' aria-describedby="basic-addon3">

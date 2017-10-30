@@ -106,9 +106,11 @@ fieldset[disabled] .btn-hg.active {
 	color: white; 
 }
 
+/*
 body {
 	font-family: 'Delius', cursive;
 }
+*/
 
 .link-register {
 	color: #1e3231;
